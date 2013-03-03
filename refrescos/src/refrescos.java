@@ -217,11 +217,18 @@ public class refrescos extends JFrame {
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_cambio.setText(Dinero.cambio(textField_seleccionado.getText()));
-				if(!textField_cambio.getText().equals("Te falta dinero")){
+				if(textField_cambio.getText().equals("$0")){
+					textField_acumulado.setText("$0");
+					comprado frame = new comprado(textField_seleccionado.getText());
+					frame.setVisible(true);
+				}
+				else if(!textField_cambio.getText().equals("Te falta dinero")){
 					btnNewButton_4.setEnabled(true);
 					btnNewButton.setEnabled(false);
 					btnNewButton_3.setEnabled(false);
-				}	
+					comprado frame = new comprado(textField_seleccionado.getText());
+					frame.setVisible(true);
+				}
 			}
 		});
 		sl_panel.putConstraint(SpringLayout.NORTH, btnNewButton_3, 9, SpringLayout.SOUTH, textField_acumulado);
