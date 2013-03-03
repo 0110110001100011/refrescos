@@ -19,9 +19,9 @@ import java.awt.event.ActionEvent;
 @SuppressWarnings("serial")
 public class refrescos extends JFrame {
 	private JPanel contentPane;
-	public JTextField textField_acum;
+	public JTextField textField_acumulado;
 	public JTextField textField_cambio;
-	public JComboBox comboBox;
+	public JComboBox<Object> comboBox;
 	private JButton btnNewButton;
 	private JLabel lblMoneda;
 	private JLabel lblCambio;
@@ -31,10 +31,11 @@ public class refrescos extends JFrame {
 	private JButton btnSprite;
 	private JButton btnCocacola;
 	private JLabel lblSeleccionado;
-	public JTextField txtCocacola;
+	public JTextField textField_seleccionado;
 	private JLabel lblPrecio;
 	private JTextField textField_precio;
 	private JButton btnNewButton_3;
+	private JPanel panel;
 
 	/**
 	 * Launch the application.
@@ -63,7 +64,7 @@ public class refrescos extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 		SpringLayout sl_panel = new SpringLayout();
 		panel.setLayout(sl_panel);
@@ -75,16 +76,16 @@ public class refrescos extends JFrame {
 		btnNewButton = new JButton("Ingresa");
 		sl_panel.putConstraint(SpringLayout.NORTH, btnNewButton, 0, SpringLayout.NORTH, lblMoneda);
 		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<Object>();
 		sl_panel.putConstraint(SpringLayout.NORTH, comboBox, -3, SpringLayout.NORTH, lblMoneda);
 		sl_panel.putConstraint(SpringLayout.WEST, comboBox, 6, SpringLayout.EAST, lblMoneda);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"$1", "$2", "$5", "$10"}));
+		comboBox.setModel(new DefaultComboBoxModel<Object>(new String[] {"$1", "$2", "$5", "$10"}));
 		panel.add(comboBox);
 		
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textField_acum.setText(Dinero.ingresa(comboBox.getSelectedIndex()));
+				textField_acumulado.setText(Dinero.ingresa(comboBox.getSelectedIndex()));
 				textField_cambio.setText("$0");
 			}
 		});
@@ -94,24 +95,24 @@ public class refrescos extends JFrame {
 		sl_panel.putConstraint(SpringLayout.WEST, lblCambio, 0, SpringLayout.WEST, lblMoneda);
 		panel.add(lblCambio);
 		
-		textField_acum = new JTextField();
-		sl_panel.putConstraint(SpringLayout.EAST, btnNewButton, 0, SpringLayout.EAST, textField_acum);
-		textField_acum.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_acum.setText("$0\r\n");
-		textField_acum.setEditable(false);
-		panel.add(textField_acum);
-		textField_acum.setColumns(10);
+		textField_acumulado = new JTextField();
+		sl_panel.putConstraint(SpringLayout.EAST, btnNewButton, 0, SpringLayout.EAST, textField_acumulado);
+		textField_acumulado.setHorizontalAlignment(SwingConstants.RIGHT);
+		textField_acumulado.setText("$0\r\n");
+		textField_acumulado.setEditable(false);
+		panel.add(textField_acumulado);
+		textField_acumulado.setColumns(10);
 		
 		lblDinero = new JLabel("Dinero");
-		sl_panel.putConstraint(SpringLayout.WEST, textField_acum, 49, SpringLayout.EAST, lblDinero);
+		sl_panel.putConstraint(SpringLayout.WEST, textField_acumulado, 49, SpringLayout.EAST, lblDinero);
 		sl_panel.putConstraint(SpringLayout.NORTH, lblDinero, 31, SpringLayout.SOUTH, lblMoneda);
-		sl_panel.putConstraint(SpringLayout.NORTH, textField_acum, -3, SpringLayout.NORTH, lblDinero);
+		sl_panel.putConstraint(SpringLayout.NORTH, textField_acumulado, -3, SpringLayout.NORTH, lblDinero);
 		sl_panel.putConstraint(SpringLayout.WEST, lblDinero, 0, SpringLayout.WEST, lblMoneda);
 		panel.add(lblDinero);
 		
 		textField_cambio = new JTextField();
 		sl_panel.putConstraint(SpringLayout.NORTH, lblCambio, 3, SpringLayout.NORTH, textField_cambio);
-		sl_panel.putConstraint(SpringLayout.NORTH, textField_cambio, 50, SpringLayout.SOUTH, textField_acum);
+		sl_panel.putConstraint(SpringLayout.NORTH, textField_cambio, 50, SpringLayout.SOUTH, textField_acumulado);
 		sl_panel.putConstraint(SpringLayout.EAST, textField_cambio, 0, SpringLayout.EAST, btnNewButton);
 		textField_cambio.setHorizontalAlignment(SwingConstants.RIGHT);
 		textField_cambio.setText("$0\r\n");
@@ -120,9 +121,12 @@ public class refrescos extends JFrame {
 		textField_cambio.setColumns(10);
 		
 		btnNewButton_1 = new JButton("Fanta");
+		sl_panel.putConstraint(SpringLayout.WEST, btnNewButton_1, 10, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.SOUTH, btnNewButton_1, -122, SpringLayout.SOUTH, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, btnNewButton_1, -41, SpringLayout.WEST, lblDinero);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtCocacola.setText("Fanta");
+				textField_seleccionado.setText("Fanta");
 				textField_precio.setText("$"+producto.fanta());
 			}
 		});
@@ -131,88 +135,111 @@ public class refrescos extends JFrame {
 		panel.add(btnNewButton_1);
 		
 		btnNewButton_2 = new JButton("Coca-Cola Zero");
+		sl_panel.putConstraint(SpringLayout.NORTH, btnNewButton_1, 6, SpringLayout.SOUTH, btnNewButton_2);
+		sl_panel.putConstraint(SpringLayout.EAST, btnNewButton_2, -249, SpringLayout.EAST, panel);
+		sl_panel.putConstraint(SpringLayout.NORTH, btnNewButton_2, 61, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.SOUTH, btnNewButton_2, -173, SpringLayout.SOUTH, panel);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtCocacola.setText("Coca-Cola Zero");
+				textField_seleccionado.setText("Coca-Cola Zero");
 				textField_precio.setText("$"+producto.cocaz());
 			}
 		});
 		sl_panel.putConstraint(SpringLayout.WEST, btnNewButton_2, 10, SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, btnNewButton_2, -177, SpringLayout.SOUTH, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, btnNewButton_2, -269, SpringLayout.EAST, panel);
 		btnNewButton_2.setHorizontalAlignment(SwingConstants.LEFT);
-		sl_panel.putConstraint(SpringLayout.NORTH, btnNewButton_1, 6, SpringLayout.SOUTH, btnNewButton_2);
-		sl_panel.putConstraint(SpringLayout.WEST, btnNewButton_1, 0, SpringLayout.WEST, btnNewButton_2);
-		sl_panel.putConstraint(SpringLayout.EAST, btnNewButton_1, 0, SpringLayout.EAST, btnNewButton_2);
 		btnNewButton_2.setIcon(new ImageIcon("img\\cocaz.png"));
 		panel.add(btnNewButton_2);
 		
 		btnSprite = new JButton("Sprite");
+		sl_panel.putConstraint(SpringLayout.NORTH, btnSprite, 6, SpringLayout.SOUTH, btnNewButton_1);
+		sl_panel.putConstraint(SpringLayout.WEST, btnSprite, 0, SpringLayout.WEST, btnNewButton_1);
+		sl_panel.putConstraint(SpringLayout.SOUTH, btnSprite, 51, SpringLayout.SOUTH, btnNewButton_1);
+		sl_panel.putConstraint(SpringLayout.EAST, btnSprite, 0, SpringLayout.EAST, btnNewButton_1);
 		btnSprite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtCocacola.setText("Sprite");
+				textField_seleccionado.setText("Sprite");
 				textField_precio.setText("$"+producto.sprite());
 			}
 		});
 		btnSprite.setHorizontalAlignment(SwingConstants.LEFT);
-		sl_panel.putConstraint(SpringLayout.NORTH, btnSprite, 6, SpringLayout.SOUTH, btnNewButton_1);
-		sl_panel.putConstraint(SpringLayout.WEST, btnSprite, 0, SpringLayout.WEST, btnNewButton_1);
-		sl_panel.putConstraint(SpringLayout.EAST, btnSprite, 0, SpringLayout.EAST, btnNewButton_1);
 		btnSprite.setIcon(new ImageIcon("img\\Sprite.png"));
 		panel.add(btnSprite);
 		
 		btnCocacola = new JButton("Coca-Cola");
-		sl_panel.putConstraint(SpringLayout.NORTH, btnCocacola, 20, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, btnCocacola, -224, SpringLayout.SOUTH, panel);
-		sl_panel.putConstraint(SpringLayout.NORTH, btnNewButton_2, 6, SpringLayout.SOUTH, btnCocacola);
+		sl_panel.putConstraint(SpringLayout.NORTH, btnCocacola, 10, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.WEST, btnCocacola, 10, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.SOUTH, btnCocacola, -6, SpringLayout.NORTH, btnNewButton_2);
+		sl_panel.putConstraint(SpringLayout.EAST, btnCocacola, 0, SpringLayout.EAST, btnNewButton_1);
 		btnCocacola.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				txtCocacola.setText("Coca-Cola");
+				textField_seleccionado.setText("Coca-Cola");
 				textField_precio.setText("$"+producto.coca());
 			}
 		});
 		btnCocacola.setHorizontalAlignment(SwingConstants.LEFT);
-		sl_panel.putConstraint(SpringLayout.WEST, btnCocacola, 10, SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, btnCocacola, 0, SpringLayout.EAST, btnNewButton_2);
 		btnCocacola.setIcon(new ImageIcon("img\\coca.png"));
 		panel.add(btnCocacola);
 		
 		lblSeleccionado = new JLabel("Seleccionado");
-		sl_panel.putConstraint(SpringLayout.NORTH, lblSeleccionado, 13, SpringLayout.NORTH, btnCocacola);
+		sl_panel.putConstraint(SpringLayout.NORTH, lblSeleccionado, 33, SpringLayout.NORTH, panel);
 		sl_panel.putConstraint(SpringLayout.WEST, lblSeleccionado, 0, SpringLayout.WEST, lblMoneda);
 		panel.add(lblSeleccionado);
 		
-		txtCocacola = new JTextField();
-		txtCocacola.setText("Coca-Cola");
-		sl_panel.putConstraint(SpringLayout.NORTH, txtCocacola, 9, SpringLayout.NORTH, btnCocacola);
-		sl_panel.putConstraint(SpringLayout.EAST, txtCocacola, 0, SpringLayout.EAST, btnNewButton);
-		txtCocacola.setEditable(false);
-		panel.add(txtCocacola);
-		txtCocacola.setColumns(10);
+		textField_seleccionado = new JTextField();
+		sl_panel.putConstraint(SpringLayout.NORTH, textField_seleccionado, 29, SpringLayout.NORTH, panel);
+		textField_seleccionado.setHorizontalAlignment(SwingConstants.RIGHT);
+		textField_seleccionado.setText("Coca-Cola");
+		sl_panel.putConstraint(SpringLayout.EAST, textField_seleccionado, 0, SpringLayout.EAST, btnNewButton);
+		textField_seleccionado.setEditable(false);
+		panel.add(textField_seleccionado);
+		textField_seleccionado.setColumns(10);
 		
 		lblPrecio = new JLabel("Precio");
+		sl_panel.putConstraint(SpringLayout.NORTH, lblPrecio, 14, SpringLayout.SOUTH, lblSeleccionado);
 		sl_panel.putConstraint(SpringLayout.NORTH, lblMoneda, 17, SpringLayout.SOUTH, lblPrecio);
-		sl_panel.putConstraint(SpringLayout.NORTH, lblPrecio, 0, SpringLayout.NORTH, btnNewButton_2);
 		sl_panel.putConstraint(SpringLayout.WEST, lblPrecio, 0, SpringLayout.WEST, lblMoneda);
 		panel.add(lblPrecio);
 		
 		textField_precio = new JTextField();
+		sl_panel.putConstraint(SpringLayout.NORTH, textField_precio, 12, SpringLayout.SOUTH, textField_seleccionado);
 		textField_precio.setHorizontalAlignment(SwingConstants.RIGHT);
 		textField_precio.setText("$9");
-		sl_panel.putConstraint(SpringLayout.NORTH, textField_precio, 0, SpringLayout.NORTH, btnNewButton_2);
 		sl_panel.putConstraint(SpringLayout.EAST, textField_precio, 0, SpringLayout.EAST, btnNewButton);
 		textField_precio.setEditable(false);
 		panel.add(textField_precio);
 		textField_precio.setColumns(10);
 		
-		btnNewButton_3 = new JButton("Listo");
+
+		final JButton btnNewButton_4 = new JButton("Recoger Cambio");
+		btnNewButton_4.setEnabled(false);
+		
+		btnNewButton_3 = new JButton("Comprar");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textField_cambio.setText(Dinero.cambio(txtCocacola.getText()));
+				textField_cambio.setText(Dinero.cambio(textField_seleccionado.getText()));
+				if(!textField_cambio.getText().equals("Te falta dinero")){
+					btnNewButton_4.setEnabled(true);
+					btnNewButton.setEnabled(false);
+					btnNewButton_3.setEnabled(false);
+				}	
 			}
 		});
-		sl_panel.putConstraint(SpringLayout.NORTH, btnNewButton_3, 9, SpringLayout.SOUTH, textField_acum);
+		sl_panel.putConstraint(SpringLayout.NORTH, btnNewButton_3, 9, SpringLayout.SOUTH, textField_acumulado);
 		sl_panel.putConstraint(SpringLayout.EAST, btnNewButton_3, 0, SpringLayout.EAST, btnNewButton);
 		panel.add(btnNewButton_3);
+		
+		
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				textField_acumulado.setText("$0");
+				textField_cambio.setText("$0");
+				btnNewButton_4.setEnabled(false);
+				btnNewButton_3.setEnabled(true);
+				btnNewButton.setEnabled(true);
+			}
+		});
+		sl_panel.putConstraint(SpringLayout.SOUTH, btnNewButton_4, -10, SpringLayout.SOUTH, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, btnNewButton_4, 0, SpringLayout.EAST, btnNewButton);
+		panel.add(btnNewButton_4);
 	}
 }

@@ -1,6 +1,6 @@
 
 public class Dinero {
-	static int acumulado=0;
+	public static int acumulado=0;
 	static int cambio=0;
 	static String acumS = "$0";
 	static String cambioS = "$0";
